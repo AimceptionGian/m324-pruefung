@@ -51,8 +51,11 @@ jobs:
           name: build-artifact
           path: .
 
+      - name: debug build/test folder
+        run: ls -la
+
       - name: Run tests
-        run: npm list react-scripts
+        run: npm run test
 
   lint:
     runs-on: ubuntu-22.04
@@ -70,6 +73,9 @@ jobs:
         with:
           name: build-artifact
           path: .
+
+      - name: debug build/lint folder
+        run: ls -la
 
       - name: Lint code
         run: npm run lint
