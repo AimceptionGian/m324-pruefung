@@ -1,0 +1,67 @@
+name: M324 Prüfung Gian Oechslin
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.14.0"
+
+      - name: install dependencies
+        run: npm i
+
+      - name: build the app
+        run: npm run build
+
+      - name: debug build folder
+        run: ls -la
+
+      - name: upload build-artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: .
+
+  test:
+    runs-on: ubuntu-22.04
+
+    needs: build
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.14.0"
+
+      - name: download build-artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: .
+
+      - name: Run tests
+        run: next test
+
+  lint:
+    runs-on: ubuntu-22.04
+
+    needs: build
+    steps:
+      - name: download build-artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: .
+
+      - name: Lint code
+        run: next lint
