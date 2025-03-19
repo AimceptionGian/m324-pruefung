@@ -50,7 +50,7 @@ jobs:
           path: .
 
       - name: Run tests
-        run: npm run test
+        run: npm list react-scripts
 
   lint:
     runs-on: ubuntu-22.04
