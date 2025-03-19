@@ -50,7 +50,7 @@ jobs:
           path: .
 
       - name: Run tests
-        run: next test
+        run: npm run test
 
   lint:
     runs-on: ubuntu-22.04
@@ -64,4 +64,12 @@ jobs:
           path: .
 
       - name: Lint code
-        run: next lint
+        run: npm run lint
+
+  deploy:
+    runs-on: ubuntu-22.04
+
+    needs: [build, test, lint]
+    steps:
+      - name: Deployment Simulation
+        run: echo "Deployment successful"
